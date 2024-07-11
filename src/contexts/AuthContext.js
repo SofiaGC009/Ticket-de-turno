@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -13,12 +13,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsAuthenticated(true);
-    navigate('/menu');
+    navigate("/menu");
   };
 
   const logout = () => {
     setIsAuthenticated(false);
-    navigate('/login'); 
+    navigate("/login");
   };
 
   return (

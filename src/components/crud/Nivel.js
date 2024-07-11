@@ -3,28 +3,26 @@ import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "../common/NavBar";
 
-function Municipios() {
-  const [idMunicipio, setIdMunicipio] = useState("");
-  const [municipio, setMunicipio] = useState("");
+function Nivel() {
+  const [idNivel, setIdNivel] = useState("");
+  const [nivel, setNivel] = useState("");
 
   const [editar, setEditar] = useState(false);
 
-  const [municipioList, setMunicipioList] = useState([]);
+  const [nivelList, setNivelList] = useState([]);
 
-  const obtenerUltimoIdMunicipio = useCallback(() => {
+  const obtenerUltimoIdNivel = useCallback(() => {
     const ultimoId =
-      municipioList.length > 0
-        ? Math.max(...municipioList.map((v) => v.id))
-        : 0;
-    setIdMunicipio(ultimoId + 1);
-  }, [municipioList]);
+      nivelList.length > 0 ? Math.max(...nivelList.map((v) => v.id)) : 0;
+    setIdNivel(ultimoId + 1);
+  }, [nivelList]);
 
   const validateInput = () => {
-    if (!municipio.trim()) {
+    if (!nivel.trim()) {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "El campo Municipio no puede estar vacío.",
+        text: "El campo Nivel no puede estar vacío.",
       });
       return false;
     }
@@ -34,12 +32,12 @@ function Municipios() {
   const registrar = () => {
     if (!validateInput()) return;
 
-    const nuevoMunicipio = { id: idMunicipio, nombre: municipio };
-    setMunicipioList([...municipioList, nuevoMunicipio]);
+    const nuevoNivel = { id: idNivel, nombre: nivel };
+    setNivelList([...nivelList, nuevoNivel]);
     limpiar();
     Swal.fire({
       icon: "success",
-      title: "Municipio " + municipio + " registrado",
+      title: "Nivel " + nivel + " registrado",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -48,15 +46,15 @@ function Municipios() {
   const update = () => {
     if (!validateInput()) return;
 
-    setMunicipioList(
-      municipioList.map((m) =>
-        m.id === idMunicipio ? { id: idMunicipio, nombre: municipio } : m
+    setNivelList(
+      nivelList.map((n) =>
+        n.id === idNivel ? { id: idNivel, nombre: nivel } : n
       )
     );
     limpiar();
     Swal.fire({
       icon: "success",
-      title: "Municipio " + municipio + " actualizado",
+      title: "Nivel " + nivel + " actualizado",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -64,7 +62,7 @@ function Municipios() {
 
   const eliminar = (val) => {
     Swal.fire({
-      title: "¿Seguro que deseas eliminar el municipio?",
+      title: "¿Seguro que deseas eliminar el nivel?",
       text: "No podrás revertir esto!",
       icon: "warning",
       showCancelButton: true,
@@ -73,63 +71,63 @@ function Municipios() {
       confirmButtonText: "Sí, eliminar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setMunicipioList(municipioList.filter((m) => m.id !== val.id));
+        setNivelList(nivelList.filter((n) => n.id !== val.id));
         limpiar();
         Swal.fire(
           "Eliminado!",
-          `El municipio ${val.nombre} fue eliminado.`,
+          `El nivel ${val.nombre} fue eliminado.`,
           "success"
         );
       }
     });
   };
 
-  const editarMunicipio = (val) => {
+  const editarNivel = (val) => {
     setEditar(true);
-    setIdMunicipio(val.id);
-    setMunicipio(val.nombre);
+    setIdNivel(val.id);
+    setNivel(val.nombre);
   };
 
   const limpiar = () => {
-    setIdMunicipio("");
-    setMunicipio("");
+    setIdNivel("");
+    setNivel("");
     setEditar(false);
-    obtenerUltimoIdMunicipio();
+    obtenerUltimoIdNivel();
   };
 
   useEffect(() => {
-    obtenerUltimoIdMunicipio();
-  }, [municipioList, obtenerUltimoIdMunicipio]);
+    obtenerUltimoIdNivel();
+  }, [nivelList, obtenerUltimoIdNivel]);
 
   return (
     <div className="container">
       <NavBar />
       <div className="card text-center">
         <div className="card-header">
-          <h1>MUNICIPIOS</h1>
+          <h1>NIVELES</h1>
         </div>
         <div className="card-body">
           <div className="input-group mb-3">
-            <span className="input-group-text">Id Municipio:</span>
+            <span className="input-group-text">Id Nivel:</span>
             <input
               onChange={(event) => {
-                setIdMunicipio(event.target.value);
+                setIdNivel(event.target.value);
               }}
               type="text"
               className="form-control"
-              value={idMunicipio}
+              value={idNivel}
               readOnly
             />
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text">Municipio:</span>
+            <span className="input-group-text">Nivel:</span>
             <input
               onChange={(event) => {
-                setMunicipio(event.target.value);
+                setNivel(event.target.value);
               }}
               type="text"
               className="form-control"
-              value={municipio}
+              value={nivel}
             />
           </div>
           {editar ? (
@@ -152,12 +150,12 @@ function Municipios() {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Municipio</th>
+            <th scope="col">Nivel</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {municipioList.map((val) => (
+          {nivelList.map((val) => (
             <tr key={val.id}>
               <th>{val.id}</th>
               <td>{val.nombre}</td>
@@ -165,7 +163,7 @@ function Municipios() {
                 <div className="btn-group" role="group">
                   <button
                     type="button"
-                    onClick={() => editarMunicipio(val)}
+                    onClick={() => editarNivel(val)}
                     className="btn btn-info"
                   >
                     Editar
@@ -187,4 +185,4 @@ function Municipios() {
   );
 }
 
-export default Municipios;
+export default Nivel;

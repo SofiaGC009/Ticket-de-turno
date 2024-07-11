@@ -6,13 +6,14 @@ import Menu from "./pages/Menu";
 import Municipios from "./components/crud/Municipios";
 import PrivateRoute from "./routes/PrivateRoute";
 import Asuntos from "./components/crud/Asuntos";
+import Nivel from "./components/crud/Nivel";
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-        <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/menu"
@@ -35,6 +36,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Asuntos />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/niveles"
+            element={
+              <PrivateRoute>
+                <Nivel />
               </PrivateRoute>
             }
           />

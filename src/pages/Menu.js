@@ -9,11 +9,11 @@ const Menu = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleNavigateToMunicipios = () => {
-    navigate('/municipios');
+    navigate("/municipios");
   };
 
   return (
@@ -21,7 +21,10 @@ const Menu = () => {
       <NavBar />
       <div className="container mt-4">
         <h1>Menú Principal</h1>
-        <button className="btn btn-primary mt-3" onClick={handleNavigateToMunicipios}>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={handleNavigateToMunicipios}
+        >
           Ir a Municipios
         </button>
         <button className="btn btn-secondary mt-3" onClick={handleLogout}>

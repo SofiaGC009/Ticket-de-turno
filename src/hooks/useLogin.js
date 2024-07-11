@@ -12,18 +12,18 @@ const useLogin = () => {
   const handleLogin = () => {
     if (!user) {
       Swal.fire({
-        icon: 'error',
-        title: 'Campo de usuario vacío',
-        text: 'Por favor ingrese un usuario',
+        icon: "error",
+        title: "Campo de usuario vacío",
+        text: "Por favor ingrese un usuario",
       });
       return;
     }
 
     if (!password) {
       Swal.fire({
-        icon: 'error',
-        title: 'Campo de contraseña vacío',
-        text: 'Por favor ingrese una contraseña',
+        icon: "error",
+        title: "Campo de contraseña vacío",
+        text: "Por favor ingrese una contraseña",
       });
       return;
     }
@@ -34,27 +34,27 @@ const useLogin = () => {
 
     if (!admin) {
       Swal.fire({
-        icon: 'error',
-        title: 'Usuario o contraseña incorrectos',
-        text: 'Por favor verifique sus credenciales',
+        icon: "error",
+        title: "Usuario o contraseña incorrectos",
+        text: "Por favor verifique sus credenciales",
       });
       return;
     }
 
     if (!captchaValue) {
       Swal.fire({
-        icon: 'error',
-        title: 'Captcha no completada',
-        text: 'Por favor complete el captcha',
+        icon: "error",
+        title: "Captcha no completada",
+        text: "Por favor complete el captcha",
       });
       return;
     }
 
     Swal.fire({
-      icon: 'success',
-      title: 'Inicio de sesión exitoso',
+      icon: "success",
+      title: "Inicio de sesión exitoso",
       showConfirmButton: false,
-      timer: 1500
+      timer: 1500,
     }).then(() => {
       login();
     });
@@ -70,7 +70,7 @@ const useLogin = () => {
     password,
     setPassword,
     handleLogin,
-    handleCaptchaChange
+    handleCaptchaChange,
   };
 };
 

@@ -16,7 +16,21 @@ function Asuntos() {
     setIdAsunto(ultimoId + 1);
   }, [asuntoList]);
 
+  const validateInput = () => {
+    if (!asunto.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Asunto no puede estar vacío.",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const registrar = () => {
+    if (!validateInput()) return;
+
     const nuevoAsunto = { id: idAsunto, nombre: asunto };
     setAsuntoList([...asuntoList, nuevoAsunto]);
     limpiar();
@@ -29,6 +43,8 @@ function Asuntos() {
   };
 
   const update = () => {
+    if (!validateInput()) return;
+
     setAsuntoList(asuntoList.map(a => (a.id === idAsunto ? { id: idAsunto, nombre: asunto } : a)));
     limpiar();
     Swal.fire({

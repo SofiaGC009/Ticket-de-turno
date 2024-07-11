@@ -10,7 +10,7 @@ const Login = () => {
     password,
     setPassword,
     handleLogin,
-    handleCaptchaChange
+    handleCaptchaChange,
   } = useLogin();
 
   const onSubmit = (event) => {
