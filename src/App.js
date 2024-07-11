@@ -7,6 +7,7 @@ import Municipios from "./components/crud/Municipios";
 import PrivateRoute from "./routes/PrivateRoute";
 import Asuntos from "./components/crud/Asuntos";
 import Nivel from "./components/crud/Nivel";
+import TicketForm from "./public/TicketForm";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/solicitud" element={<TicketForm />} />
           <Route
             path="/menu"
             element={
