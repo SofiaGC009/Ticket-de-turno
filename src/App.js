@@ -3,20 +3,25 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import Menu from "./pages/Menu";
-import PrivateRoute from "./components/PrivateRoute";
+import Municipios from "./components/crud/Municipios";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/menu"
-            element={
+          <Route path="/menu" element={
               <PrivateRoute>
                 <Menu />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/municipios" element={
+              <PrivateRoute>
+                <Municipios />
               </PrivateRoute>
             }
           />

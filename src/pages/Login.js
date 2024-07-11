@@ -13,6 +13,11 @@ const Login = () => {
     handleCaptchaChange
   } = useLogin();
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    handleLogin();
+  };
+
   return (
     <div className="container">
       <div className="card text-center">
@@ -20,31 +25,35 @@ const Login = () => {
           <h1>Login</h1>
         </div>
         <div className="card-body">
-          <div className="input-group mb-3">
-            <span className="input-group-text">Username:</span>
-            <input
-              type="text"
-              className="form-control"
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
+          <form onSubmit={onSubmit}>
+            <div className="input-group mb-3">
+              <span className="input-group-text">Username:</span>
+              <input
+                type="text"
+                className="form-control"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
+                autoComplete="username"
+              />
+            </div>
+            <div className="input-group mb-3">
+              <span className="input-group-text">Password:</span>
+              <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+              />
+            </div>
+            <ReCAPTCHA
+              sitekey={config.siteKey}
+              onChange={handleCaptchaChange}
             />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Password:</span>
-            <input
-              type="password"
-              className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <ReCAPTCHA
-            sitekey={config.siteKey}
-            onChange={handleCaptchaChange}
-          />
-          <button className="btn btn-primary mt-3" onClick={handleLogin}>
-            Login
-          </button>
+            <button type="submit" className="btn btn-primary mt-3">
+              Login
+            </button>
+          </form>
         </div>
       </div>
     </div>
