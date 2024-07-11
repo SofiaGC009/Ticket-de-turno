@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Swal from "sweetalert2";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "../common/NavBar";
@@ -11,10 +11,10 @@ function Municipios() {
 
   const [municipioList, setMunicipioList] = useState([]);
 
-  const obtenerUltimoIdMunicipio = () => {
+  const obtenerUltimoIdMunicipio = useCallback(() => {
     const ultimoId = municipioList.length > 0 ? Math.max(...municipioList.map(v => v.id)) : 0;
     setIdMunicipio(ultimoId + 1);
-  };
+  }, [municipioList]);
 
   const registrar = () => {
     const nuevoMunicipio = { id: idMunicipio, nombre: municipio };
