@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import Municipios from "./components/crud/Municipios";
 import PrivateRoute from "./routes/PrivateRoute";
+import Asuntos from "./components/crud/Asuntos";
 
 const App = () => {
   return (
@@ -13,15 +14,27 @@ const App = () => {
         <Routes>
         <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/menu" element={
+          <Route
+            path="/menu"
+            element={
               <PrivateRoute>
                 <Menu />
               </PrivateRoute>
             }
           />
-          <Route path="/municipios" element={
+          <Route
+            path="/municipios"
+            element={
               <PrivateRoute>
                 <Municipios />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/asuntos"
+            element={
+              <PrivateRoute>
+                <Asuntos />
               </PrivateRoute>
             }
           />
