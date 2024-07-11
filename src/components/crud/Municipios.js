@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from "../common/NavBar"; // Asegúrate de que esta ruta sea correcta
+import NavBar from "../common/NavBar";
 
 function Municipios() {
   const [idMunicipio, setIdMunicipio] = useState("");
@@ -72,7 +72,7 @@ function Municipios() {
 
   useEffect(() => {
     obtenerUltimoIdMunicipio();
-  }, [municipioList]);
+  }, [municipioList, obtenerUltimoIdMunicipio]);
 
   return (
     <div className="container">
