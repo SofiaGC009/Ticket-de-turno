@@ -4,19 +4,22 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import Menu from "./pages/Menu";
 import Municipios from "./components/crud/Municipios";
-import PrivateRoute from "./routes/PrivateRoute";
 import Asuntos from "./components/crud/Asuntos";
 import Nivel from "./components/crud/Nivel";
-import TicketForm from "./public/TicketForm";
+import AdminTickets from "./components/AdminTickets";
+import Dashboard from "./components/Dashboard";
+import PrivateRoute from "./routes/PrivateRoute";
+import TicketForm from "./pages/TicketForm";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/solicitud" element={<TicketForm />} />
+          <Route path="/ticket-form" element={<TicketForm />} />
           <Route
             path="/menu"
             element={
@@ -46,6 +49,22 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Nivel />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin-tickets"
+            element={
+              <PrivateRoute>
+                <AdminTickets />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
               </PrivateRoute>
             }
           />

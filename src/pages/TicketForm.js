@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import QRCode from "qrcode.react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 const TicketForm = () => {
   const [nombreCompleto, setNombreCompleto] = useState("");
@@ -16,7 +17,11 @@ const TicketForm = () => {
   const [nivel, setNivel] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [asunto, setAsunto] = useState("");
+  const [turno, setTurno] = useState("");
   const [ticketList, setTicketList] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedTickets = localStorage.getItem("ticketList");
@@ -56,7 +61,7 @@ const TicketForm = () => {
   const handleSubmit = () => {
     if (!validateInput()) return;
 
-    const turno = obtenerTurno(municipio);
+    const nuevoTurno = isEditing ? parseInt(turno) : obtenerTurno(municipio);
 
     const nuevoTicket = {
       nombreCompleto,
@@ -70,11 +75,11 @@ const TicketForm = () => {
       nivel,
       municipio,
       asunto,
-      turno,
+      turno: nuevoTurno,
     };
 
     const index = ticketList.findIndex(
-      (ticket) => ticket.curp === curp && ticket.turno === turno
+      (ticket) => ticket.curp === curp && ticket.turno === nuevoTurno
     );
 
     if (index !== -1) {
@@ -118,9 +123,52 @@ const TicketForm = () => {
     doc.text(`Asunto: ${ticket.asunto}`, 20, 130);
     doc.text(`Turno: ${ticket.turno}`, 20, 140);
 
-    doc.addImage(document.querySelector("#qrCode"), "PNG", 20, 150, 50, 50);
+    const qrCanvas = document.getElementById("qrCode");
+    const qrDataURL = qrCanvas.toDataURL("image/png");
+    doc.addImage(qrDataURL, "PNG", 20, 150, 50, 50);
 
     doc.save(`Ticket_${ticket.curp}.pdf`);
+  };
+
+  const buscarTicket = () => {
+    if (!curp.trim() || !turno.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "CURP y número de turno son obligatorios para buscar un ticket.",
+      });
+      return;
+    }
+
+    const ticket = ticketList.find(
+      (ticket) => ticket.curp === curp && ticket.turno === parseInt(turno)
+    );
+
+    if (ticket) {
+      setNombreCompleto(ticket.nombreCompleto);
+      setNombre(ticket.nombre);
+      setPaterno(ticket.paterno);
+      setMaterno(ticket.materno);
+      setTelefono(ticket.telefono);
+      setCelular(ticket.celular);
+      setCorreo(ticket.correo);
+      setNivel(ticket.nivel);
+      setMunicipio(ticket.municipio);
+      setAsunto(ticket.asunto);
+      setIsEditing(true);
+      Swal.fire({
+        icon: "success",
+        title: "Ticket encontrado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ticket no encontrado. Verifique CURP y número de turno.",
+      });
+    }
   };
 
   const limpiar = () => {
@@ -135,6 +183,12 @@ const TicketForm = () => {
     setNivel("");
     setMunicipio("");
     setAsunto("");
+    setTurno("");
+    setIsEditing(false);
+  };
+
+  const regresarInicio = () => {
+    navigate("/");
   };
 
   return (
@@ -144,15 +198,10 @@ const TicketForm = () => {
           <h1>Solicitud de Ticket</h1>
         </div>
         <div className="card-body">
-          <div className="input-group mb-3">
-            <span className="input-group-text">Nombre Completo:</span>
-            <input
-              onChange={(event) => setNombreCompleto(event.target.value)}
-              type="text"
-              className="form-control"
-              value={nombreCompleto}
-            />
-          </div>
+          <p>
+            Complete los siguientes campos para registrar un nuevo ticket o
+            para modificar un ticket existente.
+          </p>
           <div className="input-group mb-3">
             <span className="input-group-text">CURP:</span>
             <input
@@ -160,6 +209,24 @@ const TicketForm = () => {
               type="text"
               className="form-control"
               value={curp}
+            />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text">Número de Turno:</span>
+            <input
+              onChange={(event) => setTurno(event.target.value)}
+              type="text"
+              className="form-control"
+              value={turno}
+            />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text">Nombre Completo:</span>
+            <input
+              onChange={(event) => setNombreCompleto(event.target.value)}
+              type="text"
+              className="form-control"
+              value={nombreCompleto}
             />
           </div>
           <div className="input-group mb-3">
@@ -238,15 +305,15 @@ const TicketForm = () => {
               value={municipio}
             >
               <option value="">Selecciona Municipio</option>
-              <option value="Municipio1">Coahuila de Zaragoza</option>
-              <option value="Municipio2">Nuevo Leon</option>
-              <option value="Municipio3">Coahuila</option>
-              <option value="Municipio4">Durango</option>
-              <option value="Municipio5">Zacatecas</option>
-              <option value="Municipio6">San Luis Potosi</option>
-              <option value="Municipio7">Aguascalientes</option>
-              <option value="Municipio8">Jalisco</option>
-              <option value="Municipio9">Colima</option>
+              <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+              <option value="Nuevo Leon">Nuevo Leon</option>
+              <option value="Coahuila">Coahuila</option>
+              <option value="Durango">Durango</option>
+              <option value="Zacatecas">Zacatecas</option>
+              <option value="San Luis Potosi">San Luis Potosi</option>
+              <option value="Aguascalientes">Aguascalientes</option>
+              <option value="Jalisco">Jalisco</option>
+              <option value="Colima">Colima</option>
             </select>
           </div>
           <div className="input-group mb-3">
@@ -267,7 +334,15 @@ const TicketForm = () => {
             </select>
           </div>
           <div className="d-flex justify-content-center">
-            <button className="btn btn-success m-2" onClick={handleSubmit}>Generar Turno</button>
+            <button className="btn btn-success m-2" onClick={handleSubmit}>
+              {isEditing ? "Modificar Ticket" : "Generar Turno"}
+            </button>
+            <button className="btn btn-info m-2" onClick={buscarTicket}>
+              Buscar Ticket
+            </button>
+            <button className="btn btn-secondary m-2" onClick={regresarInicio}>
+              Regresar al Inicio
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/common/NavBar";
 import { useAuth } from "../contexts/AuthContext";
 
 const Menu = () => {
@@ -9,26 +8,50 @@ const Menu = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
-  const handleNavigateToMunicipios = () => {
-    navigate("/municipios");
+  const handleNavigateTo = (path) => {
+    navigate(path);
   };
 
   return (
     <div>
-      <NavBar />
       <div className="container mt-4">
         <h1>Menú Principal</h1>
         <button
           className="btn btn-primary mt-3"
-          onClick={handleNavigateToMunicipios}
+          onClick={() => handleNavigateTo("/municipios")}
         >
-          Ir a Municipios
+          Municipios
         </button>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => handleNavigateTo("/asuntos")}
+        >
+          Asuntos
+        </button>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => handleNavigateTo("/nivel")}
+        >
+          Niveles
+        </button>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => handleNavigateTo("/admin-tickets")}
+        >
+          Administrar Tickets
+        </button>
+        <button
+          className="btn btn-primary mt-3"
+          onClick={() => handleNavigateTo("/dashboard")}
+        >
+          Dashboard
+        </button>
+
         <button className="btn btn-secondary mt-3" onClick={handleLogout}>
-          Logout
+          Cerrar Sesion
         </button>
       </div>
     </div>

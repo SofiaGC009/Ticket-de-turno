@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 import useLogin from "../hooks/useLogin";
 import config from "../config/config";
@@ -13,9 +14,15 @@ const Login = () => {
     handleCaptchaChange,
   } = useLogin();
 
+  const navigate = useNavigate();
+
   const onSubmit = (event) => {
     event.preventDefault();
     handleLogin();
+  };
+
+  const regresarInicio = () => {
+    navigate("/");
   };
 
   return (
@@ -50,9 +57,18 @@ const Login = () => {
               sitekey={config.siteKey}
               onChange={handleCaptchaChange}
             />
-            <button type="submit" className="btn btn-primary mt-3">
-              Login
-            </button>
+            <div className="d-flex justify-content-center mt-3">
+              <button type="submit" className="btn btn-primary">
+                Login
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary ms-2"
+                onClick={regresarInicio}
+              >
+                Regresar al Inicio
+              </button>
+            </div>
           </form>
         </div>
       </div>
