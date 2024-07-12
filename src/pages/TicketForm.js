@@ -303,9 +303,13 @@ const TicketForm = () => {
         </div>
         <div className="card-body">
           <p>
-            Complete los siguientes campos para registrar un nuevo ticket o
-            para modificar un ticket existente. No rellene el campo de numero de turno 
-            si desea generar un nuevo ticket.
+            Complete los siguientes campos para registrar un nuevo 
+            ticket o para modificar un ticket existente.<br/> 
+            <b> No rellene el campo de numero de turno 
+            si desea generar un nuevo ticket.</b> <br/>
+            Si desea modificar un ticket existente, 
+            llene el campo de CURP y número de turno y presione el botón Buscar Ticket.
+
           </p>
           <div className="row">
             <div className="col-md-6 mb-3">
