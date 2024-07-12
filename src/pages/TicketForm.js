@@ -35,7 +35,7 @@ const TicketForm = () => {
   }, [ticketList]);
 
   const validateInput = () => {
-    const curpPattern = /^([A-Z]{4})(\d{6})([A-Z]{6})(\d{2})$/;
+    const curpPattern = /^[A-Z]{1}[AEIOU]{1}[A-Z]{2}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[HM]{1}(AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d]{1}\d{1}$/;
     const phonePattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -304,7 +304,8 @@ const TicketForm = () => {
         <div className="card-body">
           <p>
             Complete los siguientes campos para registrar un nuevo ticket o
-            para modificar un ticket existente.
+            para modificar un ticket existente. No rellene el campo de numero de turno 
+            si desea generar un nuevo ticket.
           </p>
           <div className="row">
             <div className="col-md-6 mb-3">
