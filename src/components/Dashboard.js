@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
 import NavBar from "../components/common/NavBar";
-import tickets from "../config/tickets"; // Importa los registros predefinidos
+import tickets from "../config/tickets";
 
 const Dashboard = () => {
   const [statusCounts, setStatusCounts] = useState({
@@ -27,10 +27,10 @@ const Dashboard = () => {
   const municipios = ["Total", ...new Set(tickets.map(ticket => ticket.municipio))];
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <NavBar />
-      <div className="card text-center">
-        <div className="card-header">
+      <div className="card mt-4">
+        <div className="card-header text-center">
           <h1>Dashboard</h1>
         </div>
         <div className="card-body">
@@ -48,49 +48,51 @@ const Dashboard = () => {
             </select>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-lg-6 col-md-12 mb-3">
               <h3>Estatus de Tickets</h3>
-              <PieChart width={400} height={400}>
-                <Pie
-                  data={data}
-                  cx={200}
-                  cy={200}
-                  labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
-                  }
-                  outerRadius={150}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
+              <ResponsiveContainer width="100%" height={400}>
+                <PieChart>
+                  <Pie
+                    data={data}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) =>
+                      `${name} ${(percent * 100).toFixed(0)}%`
+                    }
+                    outerRadius={150}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {data.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
-            <div className="col-md-6">
+            <div className="col-lg-6 col-md-12 mb-3">
               <h3>Comparativa de Estatus</h3>
-              <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 5, right: 30, left: 20, bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="value" fill="#8884d8" />
-              </BarChart>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={data}
+                  margin={{
+                    top: 5, right: 30, left: 20, bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="value" fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>

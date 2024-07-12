@@ -26,6 +26,31 @@ function Nivel() {
       });
       return false;
     }
+
+    if (!/^[a-zA-Z\s]+$/.test(nivel)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Nivel solo puede contener letras y espacios.",
+      });
+      return false;
+    }
+
+    if (
+      nivelList.some(
+        (n) =>
+          n.nombre.toLowerCase() === nivel.trim().toLowerCase() &&
+          n.id !== idNivel
+      )
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El nivel ya existe.",
+      });
+      return false;
+    }
+
     return true;
   };
 
@@ -102,36 +127,35 @@ function Nivel() {
   return (
     <div className="container">
       <NavBar />
-      <div className="card text-center">
-        <div className="card-header">
+      <div className="card mt-4">
+        <div className="card-header text-center">
           <h1>NIVELES</h1>
         </div>
         <div className="card-body">
-          <div className="input-group mb-3">
-            <span className="input-group-text">Id Nivel:</span>
-            <input
-              onChange={(event) => {
-                setIdNivel(event.target.value);
-              }}
-              type="text"
-              className="form-control"
-              value={idNivel}
-              readOnly
-            />
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">Id Nivel:</span>
+              <input
+                type="text"
+                className="form-control"
+                value={idNivel}
+                readOnly
+              />
+            </div>
           </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Nivel:</span>
-            <input
-              onChange={(event) => {
-                setNivel(event.target.value);
-              }}
-              type="text"
-              className="form-control"
-              value={nivel}
-            />
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">Nivel:</span>
+              <input
+                type="text"
+                className="form-control"
+                value={nivel}
+                onChange={(event) => setNivel(event.target.value)}
+              />
+            </div>
           </div>
           {editar ? (
-            <div>
+            <div className="d-flex justify-content-center">
               <button className="btn btn-warning m-2" onClick={update}>
                 Actualizar
               </button>
@@ -140,47 +164,51 @@ function Nivel() {
               </button>
             </div>
           ) : (
-            <button className="btn btn-success" onClick={registrar}>
-              Registrar
-            </button>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-success m-2" onClick={registrar}>
+                Registrar
+              </button>
+            </div>
           )}
         </div>
       </div>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nivel</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {nivelList.map((val) => (
-            <tr key={val.id}>
-              <th>{val.id}</th>
-              <td>{val.nombre}</td>
-              <td>
-                <div className="btn-group" role="group">
-                  <button
-                    type="button"
-                    onClick={() => editarNivel(val)}
-                    className="btn btn-info"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => eliminar(val)}
-                    className="btn btn-danger"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </td>
+      <div className="card mt-4">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nivel</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {nivelList.map((val) => (
+              <tr key={val.id}>
+                <td>{val.id}</td>
+                <td>{val.nombre}</td>
+                <td>
+                  <div className="btn-group" role="group">
+                    <button
+                      type="button"
+                      className="btn btn-info"
+                      onClick={() => editarNivel(val)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => eliminar(val)}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

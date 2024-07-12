@@ -6,9 +6,7 @@ import NavBar from "../common/NavBar";
 function Asuntos() {
   const [idAsunto, setIdAsunto] = useState("");
   const [asunto, setAsunto] = useState("");
-
   const [editar, setEditar] = useState(false);
-
   const [asuntoList, setAsuntoList] = useState([]);
 
   const obtenerUltimoIdAsunto = useCallback(() => {
@@ -25,6 +23,25 @@ function Asuntos() {
       });
       return false;
     }
+
+    if (!/^[a-zA-Z\s]+$/.test(asunto)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Asunto solo puede contener letras y espacios.",
+      });
+      return false;
+    }
+
+    if (asuntoList.some(a => a.nombre.toLowerCase() === asunto.trim().toLowerCase() && a.id !== idAsunto)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El asunto ya existe.",
+      });
+      return false;
+    }
+
     return true;
   };
 
@@ -93,79 +110,82 @@ function Asuntos() {
   return (
     <div className="container">
       <NavBar />
-      <div className="card text-center">
-        <div className="card-header">
+      <div className="card mt-4">
+        <div className="card-header text-center">
           <h1>ASUNTOS</h1>
         </div>
         <div className="card-body">
-          <div className="input-group mb-3">
-            <span className="input-group-text">Id Asunto:</span>
-            <input
-              onChange={(event) => {
-                setIdAsunto(event.target.value);
-              }}
-              type="text"
-              className="form-control"
-              value={idAsunto}
-              readOnly
-            />
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">Id Asunto:</span>
+              <input
+                type="text"
+                className="form-control"
+                value={idAsunto}
+                readOnly
+              />
+            </div>
           </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Asunto:</span>
-            <input
-              onChange={(event) => {
-                setAsunto(event.target.value);
-              }}
-              type="text"
-              className="form-control"
-              value={asunto}
-            />
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">Asunto:</span>
+              <input
+                type="text"
+                className="form-control"
+                value={asunto}
+                onChange={(event) => setAsunto(event.target.value)}
+              />
+            </div>
           </div>
           {editar ? (
-            <div>
+            <div className="d-flex justify-content-center">
               <button className="btn btn-warning m-2" onClick={update}>Actualizar</button>
               <button className="btn btn-danger m-2" onClick={limpiar}>Cancelar</button>
             </div>
           ) : (
-            <button className="btn btn-success" onClick={registrar}>Registrar</button>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-success m-2" onClick={registrar}>Registrar</button>
+            </div>
           )}
         </div>
       </div>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Asunto</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {asuntoList.map((val) => (
-            <tr key={val.id}>
-              <th>{val.id}</th>
-              <td>{val.nombre}</td>
-              <td>
-                <div className="btn-group" role="group">
-                  <button
-                    type="button"
-                    onClick={() => editarAsunto(val)}
-                    className="btn btn-info"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => eliminar(val)}
-                    className="btn btn-danger"
-                  >
-                    Eliminar
-                  </button>
-                </div>
-              </td>
+      <div className="card mt-4">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Asunto</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {asuntoList.map((val) => (
+              <tr key={val.id}>
+                <td>{val.id}</td>
+                <td>{val.nombre}</td>
+                <td>
+                  <div className="btn-group" role="group">
+                    <button
+                      type="button"
+                      onClick={() => editarAsunto(val)}
+                      className="btn btn-info"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => eliminar(val)}
+                      className="btn btn-danger"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

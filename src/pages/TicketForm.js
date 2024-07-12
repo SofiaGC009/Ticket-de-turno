@@ -35,23 +35,127 @@ const TicketForm = () => {
   }, [ticketList]);
 
   const validateInput = () => {
-    if (
-      !nombreCompleto.trim() ||
-      !curp.trim() ||
-      !nombre.trim() ||
-      !paterno.trim() ||
-      !materno.trim() ||
-      !telefono.trim() ||
-      !celular.trim() ||
-      !correo.trim() ||
-      !nivel.trim() ||
-      !municipio.trim() ||
-      !asunto.trim()
-    ) {
+    const curpPattern = /^([A-Z]{4})(\d{6})([A-Z]{6})(\d{2})$/;
+    const phonePattern = /^\d{10}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nombreCompleto.trim()) {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Todos los campos son obligatorios.",
+        text: "El campo Nombre Completo no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!curp.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo CURP no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!nombre.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Nombre no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!paterno.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Paterno no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!materno.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Materno no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!telefono.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Teléfono no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!celular.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Celular no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!correo.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Correo no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!nivel.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Nivel no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!municipio.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Municipio no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!asunto.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "El campo Asunto no puede estar vacío.",
+      });
+      return false;
+    }
+    if (!curpPattern.test(curp)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "CURP no es válido.",
+      });
+      return false;
+    }
+    if (!phonePattern.test(telefono)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Teléfono no es válido. Debe tener 10 dígitos.",
+      });
+      return false;
+    }
+    if (!phonePattern.test(celular)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Celular no es válido. Debe tener 10 dígitos.",
+      });
+      return false;
+    }
+    if (!emailPattern.test(correo)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Correo no es válido.",
       });
       return false;
     }
@@ -193,7 +297,7 @@ const TicketForm = () => {
 
   return (
     <div className="container">
-      <div className="card text-center">
+      <div className="card text-center mt-4">
         <div className="card-header">
           <h1>Solicitud de Ticket</h1>
         </div>
@@ -202,136 +306,138 @@ const TicketForm = () => {
             Complete los siguientes campos para registrar un nuevo ticket o
             para modificar un ticket existente.
           </p>
-          <div className="input-group mb-3">
-            <span className="input-group-text">CURP:</span>
-            <input
-              onChange={(event) => setCurp(event.target.value)}
-              type="text"
-              className="form-control"
-              value={curp}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Número de Turno:</span>
-            <input
-              onChange={(event) => setTurno(event.target.value)}
-              type="text"
-              className="form-control"
-              value={turno}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Nombre Completo:</span>
-            <input
-              onChange={(event) => setNombreCompleto(event.target.value)}
-              type="text"
-              className="form-control"
-              value={nombreCompleto}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Nombre:</span>
-            <input
-              onChange={(event) => setNombre(event.target.value)}
-              type="text"
-              className="form-control"
-              value={nombre}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Paterno:</span>
-            <input
-              onChange={(event) => setPaterno(event.target.value)}
-              type="text"
-              className="form-control"
-              value={paterno}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Materno:</span>
-            <input
-              onChange={(event) => setMaterno(event.target.value)}
-              type="text"
-              className="form-control"
-              value={materno}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Teléfono:</span>
-            <input
-              onChange={(event) => setTelefono(event.target.value)}
-              type="text"
-              className="form-control"
-              value={telefono}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Celular:</span>
-            <input
-              onChange={(event) => setCelular(event.target.value)}
-              type="text"
-              className="form-control"
-              value={celular}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Correo:</span>
-            <input
-              onChange={(event) => setCorreo(event.target.value)}
-              type="text"
-              className="form-control"
-              value={correo}
-            />
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Nivel:</span>
-            <select
-              onChange={(event) => setNivel(event.target.value)}
-              className="form-control"
-              value={nivel}
-            >
-              <option value="">Selecciona Nivel</option>
-              <option value="Primaria">Primaria</option>
-              <option value="Secundaria">Secundaria</option>
-              <option value="Preparatoria">Preparatoria</option>
-              <option value="Universidad">Universidad</option>
-            </select>
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Municipio:</span>
-            <select
-              onChange={(event) => setMunicipio(event.target.value)}
-              className="form-control"
-              value={municipio}
-            >
-              <option value="">Selecciona Municipio</option>
-              <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
-              <option value="Nuevo Leon">Nuevo Leon</option>
-              <option value="Coahuila">Coahuila</option>
-              <option value="Durango">Durango</option>
-              <option value="Zacatecas">Zacatecas</option>
-              <option value="San Luis Potosi">San Luis Potosi</option>
-              <option value="Aguascalientes">Aguascalientes</option>
-              <option value="Jalisco">Jalisco</option>
-              <option value="Colima">Colima</option>
-            </select>
-          </div>
-          <div className="input-group mb-3">
-            <span className="input-group-text">Asunto:</span>
-            <select
-              onChange={(event) => setAsunto(event.target.value)}
-              className="form-control"
-              value={asunto}
-            >
-              <option value="">Selecciona el Asunto</option>
-              <option value="Darse de baja">Darse de baja</option>
-              <option value="Darse de alta">Darse de alta</option>
-              <option value="Inscribir materias">Inscribir materias</option>
-              <option value="Revalidar materias">Revalidar materias</option>
-              <option value="Constancia de estudios">Constancia de estudios</option>
-              <option value="Carta de pasante">Carta de pasante</option>
-              <option value="Titulacion">Titulacion</option>
-            </select>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <label className="form-label">CURP:</label>
+              <input
+                onChange={(event) => setCurp(event.target.value)}
+                type="text"
+                className="form-control"
+                value={curp}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Número de Turno:</label>
+              <input
+                onChange={(event) => setTurno(event.target.value)}
+                type="text"
+                className="form-control"
+                value={turno}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Nombre Completo:</label>
+              <input
+                onChange={(event) => setNombreCompleto(event.target.value)}
+                type="text"
+                className="form-control"
+                value={nombreCompleto}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Nombre:</label>
+              <input
+                onChange={(event) => setNombre(event.target.value)}
+                type="text"
+                className="form-control"
+                value={nombre}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Paterno:</label>
+              <input
+                onChange={(event) => setPaterno(event.target.value)}
+                type="text"
+                className="form-control"
+                value={paterno}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Materno:</label>
+              <input
+                onChange={(event) => setMaterno(event.target.value)}
+                type="text"
+                className="form-control"
+                value={materno}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Teléfono:</label>
+              <input
+                onChange={(event) => setTelefono(event.target.value)}
+                type="text"
+                className="form-control"
+                value={telefono}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Celular:</label>
+              <input
+                onChange={(event) => setCelular(event.target.value)}
+                type="text"
+                className="form-control"
+                value={celular}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Correo:</label>
+              <input
+                onChange={(event) => setCorreo(event.target.value)}
+                type="text"
+                className="form-control"
+                value={correo}
+              />
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Nivel:</label>
+              <select
+                onChange={(event) => setNivel(event.target.value)}
+                className="form-control"
+                value={nivel}
+              >
+                <option value="">Selecciona Nivel</option>
+                <option value="Primaria">Primaria</option>
+                <option value="Secundaria">Secundaria</option>
+                <option value="Preparatoria">Preparatoria</option>
+                <option value="Universidad">Universidad</option>
+              </select>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Municipio:</label>
+              <select
+                onChange={(event) => setMunicipio(event.target.value)}
+                className="form-control"
+                value={municipio}
+              >
+                <option value="">Selecciona Municipio</option>
+                <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+                <option value="Nuevo Leon">Nuevo Leon</option>
+                <option value="Coahuila">Coahuila</option>
+                <option value="Durango">Durango</option>
+                <option value="Zacatecas">Zacatecas</option>
+                <option value="San Luis Potosi">San Luis Potosi</option>
+                <option value="Aguascalientes">Aguascalientes</option>
+                <option value="Jalisco">Jalisco</option>
+                <option value="Colima">Colima</option>
+              </select>
+            </div>
+            <div className="col-md-6 mb-3">
+              <label className="form-label">Asunto:</label>
+              <select
+                onChange={(event) => setAsunto(event.target.value)}
+                className="form-control"
+                value={asunto}
+              >
+                <option value="">Selecciona el Asunto</option>
+                <option value="Darse de baja">Darse de baja</option>
+                <option value="Darse de alta">Darse de alta</option>
+                <option value="Inscribir materias">Inscribir materias</option>
+                <option value="Revalidar materias">Revalidar materias</option>
+                <option value="Constancia de estudios">Constancia de estudios</option>
+                <option value="Carta de pasante">Carta de pasante</option>
+                <option value="Titulacion">Titulacion</option>
+              </select>
+            </div>
           </div>
           <div className="d-flex justify-content-center">
             <button className="btn btn-success m-2" onClick={handleSubmit}>
