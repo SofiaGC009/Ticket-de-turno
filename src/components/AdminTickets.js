@@ -35,12 +35,10 @@ const AdminTickets = () => {
         Swal.fire("No se encontraron resultados", "", "info");
       }
     } else if (searchType === "nombre") {
-      const result = tickets.filter(
-        (ticket) =>
-          ticket.nombre.toLowerCase().includes(searchValue.toLowerCase()) ||
-          ticket.paterno.toLowerCase().includes(searchValue.toLowerCase()) ||
-          ticket.materno.toLowerCase().includes(searchValue.toLowerCase())
-      );
+      const result = tickets.filter((ticket) => {
+        const nombreCompleto = `${ticket.nombre} ${ticket.paterno} ${ticket.materno}`.toLowerCase();
+        return nombreCompleto.includes(searchValue.toLowerCase());
+      });
       if (result.length > 0) {
         setTicketList(result);
       } else {
